@@ -1,15 +1,14 @@
+FROM lachlanevenson/k8s-kubectl:v1.18.10 AS k8scli
+
 FROM rancher/cli:v2.0.4
 
-ENV KUBERNETES_VERSION=v1.12.3
+COPY --from=k8scli /usr/local/bin/kubectl /usr/local/bin
 
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
 
-RUN apk --update --no-cache add curl bash \
-    && curl -LO https://storage.googleapis.com/kubernetes-release/release/$KUBERNETES_VERSION/bin/linux/amd64/kubectl \
-    && chmod +x ./kubectl \
-    && mv ./kubectl /usr/local/bin/kubectl
+RUN apk update \
+    && apk --no-cache add curl \
+    && apk --no-cache add bash
 
-COPY assets/root/ /
-
-ENTRYPOINT ["entrypoint"]
-CMD ["rancher"]
+ENTRYPOINT []
+CMD ["/bin/bash"]
