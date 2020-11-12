@@ -10,7 +10,7 @@ RUN apk update \
     && apk --no-cache add curl \
     && apk --no-cache add bash
 
-RUN curl -L https://github.com/kubernetes/kompose/releases/download/v1.16.0/kompose-linux-amd64 -o kompose
+COPY ./kompose-linux-amd64 kompose
 
 RUN chmod +x kompose
 RUN mv ./kompose /usr/local/bin/kompose
