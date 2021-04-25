@@ -6,9 +6,7 @@ COPY --from=k8scli /usr/local/bin/kubectl /usr/local/bin
 
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
 
-RUN apk update \
-    && apk --no-cache add curl \
-    && apk --no-cache add bash
+RUN apk update && apk --no-cache add curl jq bash
 
 COPY ./kompose-linux-amd64 kompose
 
